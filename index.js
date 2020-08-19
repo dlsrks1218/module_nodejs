@@ -80,7 +80,7 @@ app.get('/check_salesperson/', (req, res) => {
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_customer_data/', (req, res) => {
-  console.log(req.query.name)
+  console.log(req.body.name)
   // connection.query('insert into Customer(ticket_cnt, name, age, address, phone, id_no) values(\'' + queryData.ticket_cnt + '\',\'' + queryData.name + '\',\'' + queryData.age + '\',\'' + queryData.address + '\',\'' + queryData.phone + '\',\'' + queryData.phone + '\' , \'' + queryData.id_no + '\')', (error, rows) => {
   // // connection.query('select * from Salesperson s, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + queryData.pw + '\'and s.s_no=a.s_no', (error, rows) => {
   //   if (error) throw error;
