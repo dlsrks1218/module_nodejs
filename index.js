@@ -158,7 +158,7 @@ app.post('/update_car_data/', (req, res) => {
 
 // 파라미터 한개 포함 GET method
 app.get('/car/s_no/:car_num', (req, res) => {
-  console.log(Number(req.params.car_num))
+  // console.log(Number(req.params.car_num))
   connection.query('select s_no from Car where car_no=\'' + Number(req.params.car_num) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('car - sno result is: ', rows);
@@ -166,6 +166,15 @@ app.get('/car/s_no/:car_num', (req, res) => {
   });
 });
 
+// 파라미터 한개 포함 GET method
+app.get('/parts/parts_select/:parts_select', (req, res) => {
+  // console.log(Number(req.params.car_num))
+  connection.query('select * from Parts where car_no=\'' + Number(req.params.parts_select) + '\'', (error, rows) => {
+    if (error) throw error;
+    console.log('parts result is: ', rows);
+    res.send(rows);
+  });
+});
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_invoice_data/', (req, res) => {
