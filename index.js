@@ -87,15 +87,21 @@ app.get('/check_salesperson/', (req, res) => {
   });
 });
 
-
-'select c_no from Customer where name=%s'
-
 // insert문을 수행할 POST 메소드
 app.post('/insert_customer_data/', (req, res) => {
   // console.log(req.body.name)
   connection.query('insert into Customer(ticket_cnt, name, age, address, phone, id_no) values(\'' + Number(req.body.ticket_cnt) + '\',\'' + req.body.name + '\',\'' + Number(req.body.age) + '\',\'' + req.body.address + '\',\'' + req.body.phone + '\',\'' + req.body.id_no + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted customer - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+// insert문을 수행할 POST 메소드
+app.post('/insert_new_account/', (req, res) => {
+  connection.query('insert into Account(id, pw, c_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
+    if (error) throw error;
+    console.log('inserted account - result is: ', rows);
     res.send(rows);
   });
 });
