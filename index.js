@@ -47,7 +47,7 @@ app.get('/users/:pw', (req, res) => {
 app.get('/check_id_from_account', (req, res) => {
   connection.query('SELECT * from Account WHERE id=\'' + req.params.id + '\'', (error, rows) => {
     if (error) throw error;
-    console.log(req.params.id + '에 해당하는 account 정보 : ', rows);
+    console.log(str(req.params.id) + '에 해당하는 account 정보 : ', rows);
     res.send(rows);
   });
 });
@@ -55,7 +55,7 @@ app.get('/check_id_from_account', (req, res) => {
 app.get('/check_pw_from_account', (req, res) => {
   connection.query('SELECT * from Account WHERE pw=\'' + req.params.pw + '\'', (error, rows) => {
     if (error) throw error;
-    console.log(req.params.pw + '에 해당하는 account 정보 : ', rows);
+    console.log(str(req.params.pw) + '에 해당하는 account 정보 : ', rows);
     res.send(rows);
   });
 });
