@@ -19,7 +19,7 @@ app.get('/health', (req, res) => {
     res.status(200).send();
 });
 
-app.get('/users', (req, res) => {
+app.get('/account', (req, res) => {
   connection.query('SELECT * from Account', (error, rows) => {
     if (error) throw error;
     console.log('User info is: ', rows);
@@ -27,8 +27,7 @@ app.get('/users', (req, res) => {
   });
 });
 
-
-app.get('/users/id/:id', (req, res) => {
+app.get('/account/id/:id', (req, res) => {
   connection.query('SELECT * from Account WHERE id=\'' + req.params.id + '\'', (error, rows) => {
     if (error) throw error;
     console.log('User detail info is: ', rows);
@@ -36,7 +35,7 @@ app.get('/users/id/:id', (req, res) => {
   });
 });
 
-app.get('/users/pw/:pw', (req, res) => {
+app.get('/account/pw/:pw', (req, res) => {
   connection.query('SELECT * from Account WHERE pw=\'' + req.params.pw + '\'', (error, rows) => {
     if (error) throw error;
     console.log('User detail info is: ', rows);
