@@ -186,13 +186,22 @@ app.get('/work/m_no/', (req, res) => {
 
 // 파라미터 한개 포함 GET method
 app.get('/work/:m_no', (req, res) => {
-  // console.log(Number(req.params.car_num))
   connection.query('select * from Work where m_no=\'' + Number(req.params.m_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('all work of each mechanic result is: ', rows);
     res.send(rows);
   });
 });
+
+// 파라미터 한개 포함 GET method
+app.get('/repair_or_service/:history', (req, res) => {
+  connection.query('select service_no from `Repair-or-Service` where history=\'' + req.params.history + '\'', (error, rows) => {
+    if (error) throw error;
+    console.log('service number result is: ', rows);
+    res.send(rows);
+  });
+});
+
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_invoice_data/', (req, res) => {
@@ -212,6 +221,27 @@ app.post('/update_parts_minus/', (req, res) => {
     res.send(rows);
   });
 });
+
+
+
+// insert문을 수행할 POST 메소드
+app.post('/insert_history_data/', (req, res) => {
+  connection.query('insert into `Repair-or-Service`(history, c_no, p_no) values(\'' + req.body.history + '\',\'' + Number(req.body.c_no) + '\',\'' + Number(req.body.p_no) + '\')', (error, rows) => {
+    if (error) throw error;
+    console.log('inserted history - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+// insert문을 수행할 POST 메소드
+app.post('/insert_work_data/', (req, res) => {
+  connection.query('insert into Work(service_no, m_no, work_date) values(\'' + Number(req.body.service_no) + '\',\'' + Number(req.body.m_no) + '\',\'' + req.body.work_date + '\')', (error, rows) => {
+    if (error) throw error;
+    console.log('inserted work - result is: ', rows);
+    res.send(rows);
+  });
+});
+
 
 
 app.listen(app.get('port'), () => {
