@@ -167,9 +167,9 @@ app.get('/car/s_no/:car_num', (req, res) => {
 });
 
 // 파라미터 한개 포함 GET method
-app.get('/parts/parts_select/:parts_select', (req, res) => {
+app.get('/parts/parts_select/:p_no', (req, res) => {
   // console.log(Number(req.params.car_num))
-  connection.query('select * from Parts where car_no=\'' + Number(req.params.parts_select) + '\'', (error, rows) => {
+  connection.query('select * from Parts where p_no=\'' + Number(req.params.p_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('parts result is: ', rows);
     res.send(rows);
