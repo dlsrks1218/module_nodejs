@@ -157,7 +157,7 @@ app.post('/update_car_data/', (req, res) => {
 });
 
 // 파라미터 한개 포함 GET method
-app.get('/car/s_no/:car_no', (req, res) => {
+app.get('/car/s_no/:car_num', (req, res) => {
   console.log(Number(req.params.car_num))
   connection.query('select s_no from Car where car_no=\'' + Number(req.params.car_num) + '\'', (error, rows) => {
     if (error) throw error;
