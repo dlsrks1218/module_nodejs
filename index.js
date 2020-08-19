@@ -147,6 +147,15 @@ app.get('/available_car_list', (req, res) => {
   });
 });
 
+// customer_module
+app.get('/total_car_list', (req, res) => {
+  connection.query('SELECT car_no, brand, year, model, color FROM Car', (error, rows) => {
+    if (error) throw error;
+    console.log('total car info is: ', rows);
+    res.send(rows);
+  });
+});
+
 // update문을 수행할 POST 메소드
 app.post('/update_car_data/', (req, res) => {
   connection.query('update Car set c_no = ' + Number(req.body.c_no) + ' where car_no = ' + Number(req.body.car_num), (error, rows) => {
