@@ -167,7 +167,14 @@ app.get('/car/s_no/:car_num', (req, res) => {
 });
 
 
-
+// insert문을 수행할 POST 메소드
+app.post('/insert_invoice_data/', (req, res) => {
+  connection.query('insert into Invoice(s_no, c_no) values(\'' + Number(req.body.s_no) + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
+    if (error) throw error;
+    console.log('inserted invoice - result is: ', rows);
+    res.send(rows);
+  });
+});
 
 app.listen(app.get('port'), () => {
   console.log('Express server listening on port ' + app.get('port'));
