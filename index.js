@@ -20,7 +20,7 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-  connection.query('SELECT * from Users', (error, rows) => {
+  connection.query('SELECT * from Account', (error, rows) => {
     if (error) throw error;
     console.log('User info is: ', rows);
     res.send(rows);
@@ -34,6 +34,7 @@ app.get('/users/:id', (req, res) => {
     res.send(rows);
   });
 });
+
 
 
 app.listen(app.get('port'), () => {
