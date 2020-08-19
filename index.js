@@ -185,6 +185,17 @@ app.post('/insert_invoice_data/', (req, res) => {
   });
 });
 
+
+// update문을 수행할 POST 메소드
+app.post('/update_parts_minus/', (req, res) => {
+  connection.query('update Parts set p_cnt = p_cnt-1 where p_no = ' + Number(req.body.p_no), (error, rows) => {
+    if (error) throw error;
+    console.log('updated parts count - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+
 app.listen(app.get('port'), () => {
   console.log('Express server listening on port ' + app.get('port'));
 });
