@@ -1,6 +1,7 @@
 const express    = require('express');
 const mysql      = require('mysql');
 const dbconfig   = require('./config/database.js');
+const url        = require('url');
 const connection = mysql.createConnection(dbconfig);
 
 const app = express();
@@ -47,7 +48,8 @@ app.get('/account/pw/:pw', (req, res) => {
 
 // 파라미터 포함 GET method
 app.get('/check_customer_or_salesperson/:idpw', (req, res) => {
-  console.log(req.params.id, req.params.pw)
+  var urlObject = url.parse(req.url)
+  console.log(urlObject)
   // connection.query('select * from Salesperson s, Account a where a.id=\'' + req.params.id + '\'and a.pw=\'' + req.params.pw + '\'and s.s_no=a.s_no', (error, rows) => {
   // // connection.query('SELECT * from Account WHERE id=\'' + req.params.pw + '\'', (error, rows) => {
   //   if (error) throw error;
