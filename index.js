@@ -184,6 +184,16 @@ app.get('/work/m_no/', (req, res) => {
   });
 });
 
+// 파라미터 한개 포함 GET method
+app.get('/work/:m_no', (req, res) => {
+  // console.log(Number(req.params.car_num))
+  connection.query('select * from Work where m_no=\'' + Number(req.params.m_no) + '\'', (error, rows) => {
+    if (error) throw error;
+    console.log('all work of each mechanic result is: ', rows);
+    res.send(rows);
+  });
+});
+
 // insert문을 수행할 POST 메소드
 app.post('/insert_invoice_data/', (req, res) => {
   connection.query('insert into Invoice(s_no, c_no) values(\'' + Number(req.body.s_no) + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
