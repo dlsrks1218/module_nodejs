@@ -62,6 +62,15 @@ app.get('/customer/cno/:cno', (req, res) => {
   });
 });
 
+// 파라미터 한개 포함 GET method
+app.get('/salesperson/sno/:sno', (req, res) => {
+  connection.query('select s_no from Salesperson where name=\'' + req.params.name + '\'', (error, rows) => {
+    if (error) throw error;
+    console.log('customer - cno result is: ', rows);
+    res.send(rows);
+  });
+});
+
 // url 파싱을 통한 다중 파라미터 전달
 app.get('/check_customer/', (req, res) => {
   // var urlObject = url.parse(req.url)
@@ -100,6 +109,24 @@ app.post('/insert_customer_data/', (req, res) => {
 // insert문을 수행할 POST 메소드
 app.post('/insert_customer_account/', (req, res) => {
   connection.query('insert into Account(id, pw, c_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
+    if (error) throw error;
+    console.log('inserted account - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+// insert문을 수행할 POST 메소드
+app.post('/insert_salesperson_data/', (req, res) => {
+  connection.query('insert into Salesperson(name) values(\'' + req.body.name + '\')', (error, rows) => {
+    if (error) throw error;
+    console.log('inserted salesperson - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+// insert문을 수행할 POST 메소드
+app.post('/insert_salesperson_account/', (req, res) => {
+  connection.query('insert into Account(id, pw, s_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.s_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted account - result is: ', rows);
     res.send(rows);
