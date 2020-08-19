@@ -98,7 +98,7 @@ app.post('/insert_customer_data/', (req, res) => {
 });
 
 // insert문을 수행할 POST 메소드
-app.post('/insert_new_customer_account/', (req, res) => {
+app.post('/insert_customer_account/', (req, res) => {
   connection.query('insert into Account(id, pw, c_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted account - result is: ', rows);
