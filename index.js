@@ -2,6 +2,7 @@ const express    = require('express');
 const mysql      = require('mysql');
 const dbconfig   = require('./config/database.js');
 const url        = require('url');
+const { query } = require('express');
 const connection = mysql.createConnection(dbconfig);
 
 const app = express();
@@ -50,6 +51,8 @@ app.get('/account/pw/:pw', (req, res) => {
 app.get('/check_customer_or_salesperson/', (req, res) => {
   var urlObject = url.parse(req.url)
   console.log(urlObject)
+  var queryData = url.parse(req.url, true).query;
+  console.log(queryData)
   // connection.query('select * from Salesperson s, Account a where a.id=\'' + req.params.id + '\'and a.pw=\'' + req.params.pw + '\'and s.s_no=a.s_no', (error, rows) => {
   // // connection.query('SELECT * from Account WHERE id=\'' + req.params.pw + '\'', (error, rows) => {
   //   if (error) throw error;
