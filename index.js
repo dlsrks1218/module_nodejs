@@ -177,7 +177,7 @@ app.get('/parts/parts_select/:p_no', (req, res) => {
 });
 
 app.get('/work/m_no/', (req, res) => {
-  connection.query('SELECT distinct m_no from work', (error, rows) => {
+  connection.query('SELECT distinct m_no from Work', (error, rows) => {
     if (error) throw error;
     console.log('mechanic who have work result is: ', rows);
     res.send(rows);
