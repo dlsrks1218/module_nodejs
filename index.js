@@ -81,7 +81,7 @@ app.get('/check_salesperson/', (req, res) => {
 // insert문을 수행할 POST 메소드
 app.post('/insert_customer_data/', (req, res) => {
   // console.log(req.body.name)
-  connection.query('insert into Customer(ticket_cnt, name, age, address, phone, id_no) values(\'' + int(req.body.ticket_cnt) + '\',\'' + req.body.name + '\',\'' + int(req.body.age) + '\',\'' + req.body.address + '\',\'' + req.body.phone + '\',\'' + req.body.phone + '\' , \'' + req.body.id_no + '\')', (error, rows) => {
+  connection.query('insert into Customer(ticket_cnt, name, age, address, phone, id_no) values(\'' + Number(req.body.ticket_cnt) + '\',\'' + req.body.name + '\',\'' + Number(req.body.age) + '\',\'' + req.body.address + '\',\'' + req.body.phone + '\',\'' + req.body.id_no + '\')', (error, rows) => {
   // // connection.query('select * from Salesperson s, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + queryData.pw + '\'and s.s_no=a.s_no', (error, rows) => {
     if (error) throw error;
     console.log('inserted customer - result is: ', rows);
