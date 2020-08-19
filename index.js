@@ -149,9 +149,9 @@ app.get('/available_car_list', (req, res) => {
 
 // update문을 수행할 POST 메소드
 app.post('/update_car_data/', (req, res) => {
-  connection.query('update Car set c_no = \'' + Number(req.body.c_no) + '\'where car_no = \'' + Number(req.body.car_num) + '\')', (error, rows) => {
+  connection.query('update Car set c_no = \'' + Number(req.body.c_no) + '\' where car_no = \'' + Number(req.body.car_num) + '\')', (error, rows) => {
     if (error) throw error;
-    console.log('updated car - result is: ', rows);
+    console.log('updated car data - result is: ', rows);
     res.send(rows);
   });
 });
