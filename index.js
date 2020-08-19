@@ -176,6 +176,14 @@ app.get('/parts/parts_select/:p_no', (req, res) => {
   });
 });
 
+app.get('/work/m_no/', (req, res) => {
+  connection.query('SELECT distinct m_no from work', (error, rows) => {
+    if (error) throw error;
+    console.log('mechanic who have work result is: ', rows);
+    res.send(rows);
+  });
+});
+
 // insert문을 수행할 POST 메소드
 app.post('/insert_invoice_data/', (req, res) => {
   connection.query('insert into Invoice(s_no, c_no) values(\'' + Number(req.body.s_no) + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
