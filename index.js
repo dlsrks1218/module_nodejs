@@ -27,16 +27,8 @@ app.get('/users', (req, res) => {
   });
 });
 
-// test용
-app.get('/users/:id', (req, res) => {
-  connection.query('SELECT * from Account WHERE id=\'' + req.params.id + '\'', (error, rows) => {
-    if (error) throw error;
-    console.log('User detail info is: ', rows);
-    res.send(rows);
-  });
-});
-// test용
-app.get('/users/:pw', (req, res) => {
+
+app.get('/users/id/:id', (req, res) => {
   connection.query('SELECT * from Account WHERE id=\'' + req.params.id + '\'', (error, rows) => {
     if (error) throw error;
     console.log('User detail info is: ', rows);
@@ -44,22 +36,13 @@ app.get('/users/:pw', (req, res) => {
   });
 });
 
-app.get('/check_id_from_account', (req, res) => {
-  connection.query('SELECT * from Account WHERE id=\'' + req.query.id+ '\'', (error, rows) => {
+app.get('/users/pw/:pw', (req, res) => {
+  connection.query('SELECT * from Account WHERE pw=\'' + req.params.pw + '\'', (error, rows) => {
     if (error) throw error;
-    console.log(req.query.id + '에 해당하는 account 정보 : ', rows);
+    console.log('User detail info is: ', rows);
     res.send(rows);
   });
 });
-
-app.get('/check_pw_from_account', (req, res) => {
-  connection.query('SELECT * from Account WHERE pw=\'' + req.query.pw + '\'', (error, rows) => {
-    if (error) throw error;
-    console.log(req.query.pw + '에 해당하는 account 정보 : ', rows);
-    res.send(rows);
-  });
-});
-
 
 
 
