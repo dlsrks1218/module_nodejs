@@ -28,12 +28,23 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/users/:id', (req, res) => {
-  connection.query('SELECT * from Users WHERE id=\'' + req.params.id + '\'', (error, rows) => {
+  connection.query('SELECT * from Account WHERE id=\'' + req.params.id + '\'', (error, rows) => {
     if (error) throw error;
     console.log('User detail info is: ', rows);
     res.send(rows);
   });
 });
+
+
+app.get('/check_id_from_account', (req, res) => {
+  connection.query('SELECT * from Account WHERE id=\'' + req.params.id + '\'', (error, rows) => {
+    if (error) throw error;
+    console.log('User detail info is: ', rows);
+    res.send(rows);
+  });
+});
+
+
 
 
 
