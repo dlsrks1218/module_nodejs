@@ -147,11 +147,18 @@ app.get('/available_car_list', (req, res) => {
   });
 });
 
-// customer_module
 app.get('/total_car_list', (req, res) => {
   connection.query('SELECT car_no, brand, year, model, color FROM Car', (error, rows) => {
     if (error) throw error;
     console.log('total car info is: ', rows);
+    res.send(rows);
+  });
+});
+
+app.get('/total_customer_list', (req, res) => {
+  connection.query('select c_no, name, age, address, phone from Customer', (error, rows) => {
+    if (error) throw error;
+    console.log('total customer info is: ', rows);
     res.send(rows);
   });
 });
