@@ -53,15 +53,13 @@ app.get('/check_customer_or_salesperson/', (req, res) => {
   // console.log(urlObject)
   var queryData = url.parse(req.url, true).query;
   console.log(queryData)
-  console.log(queryData.id, queryData.pw)
+  connection.query('select * from Salesperson s, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + queryData.pw + '\'and s.s_no=a.s_no', (error, rows) => {
+  // connection.query('SELECT * from Account WHERE id=\'' + req.params.pw + '\'', (error, rows) => {
+    if (error) throw error;
+    console.log('id, pw check result is: ', rows);
+    res.send(rows);
+  });
 });
-//   connection.query('select * from Salesperson s, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + req.params.pw + '\'and s.s_no=a.s_no', (error, rows) => {
-//   // connection.query('SELECT * from Account WHERE id=\'' + req.params.pw + '\'', (error, rows) => {
-//     // if (error) throw error;
-//     // console.log('id, pw check result is: ', rows);
-//     // res.send(rows);
-//   });
-// });
 
 
 app.listen(app.get('port'), () => {
