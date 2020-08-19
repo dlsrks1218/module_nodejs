@@ -35,6 +35,9 @@ app.get('/account', (req, res) => {
   });
 });
 
+///////////////////////////////////////////////////////
+// user_init
+
 // 파라미터 포함 GET method
 app.get('/account/id/:id', (req, res) => {
   connection.query('SELECT * from Account WHERE id=\'' + req.params.id + '\'', (error, rows) => {
@@ -129,6 +132,17 @@ app.post('/insert_salesperson_account/', (req, res) => {
   connection.query('insert into Account(id, pw, s_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.s_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted account - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+
+///////////////////////////////////////////////////////
+// customer_module
+app.get('/available_car_list', (req, res) => {
+  connection.query('SELECT car_no, brand, year, model, color FROM Car WHERE c_no IS NULL', (error, rows) => {
+    if (error) throw error;
+    console.log('available car info is: ', rows);
     res.send(rows);
   });
 });
