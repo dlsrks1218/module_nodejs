@@ -44,11 +44,20 @@ app.get('/account/id/:id', (req, res) => {
   });
 });
 
-// 파라미터 포함 GET method
+// 파라미터 한개 포함 GET method
 app.get('/account/pw/:pw', (req, res) => {
   connection.query('SELECT * from Account WHERE pw=\'' + req.params.pw + '\'', (error, rows) => {
     if (error) throw error;
     console.log('User detail info is: ', rows);
+    res.send(rows);
+  });
+});
+
+// 파라미터 한개 포함 GET method
+app.get('/customer/cno/:cno', (req, res) => {
+  connection.query('select c_no from Customer where name=\'' + req.params.cno + '\'', (error, rows) => {
+    if (error) throw error;
+    console.log('customer - cno result is: ', rows);
     res.send(rows);
   });
 });
@@ -78,11 +87,13 @@ app.get('/check_salesperson/', (req, res) => {
   });
 });
 
+
+'select c_no from Customer where name=%s'
+
 // insert문을 수행할 POST 메소드
 app.post('/insert_customer_data/', (req, res) => {
   // console.log(req.body.name)
   connection.query('insert into Customer(ticket_cnt, name, age, address, phone, id_no) values(\'' + Number(req.body.ticket_cnt) + '\',\'' + req.body.name + '\',\'' + Number(req.body.age) + '\',\'' + req.body.address + '\',\'' + req.body.phone + '\',\'' + req.body.id_no + '\')', (error, rows) => {
-  // // connection.query('select * from Salesperson s, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + queryData.pw + '\'and s.s_no=a.s_no', (error, rows) => {
     if (error) throw error;
     console.log('inserted customer - result is: ', rows);
     res.send(rows);
