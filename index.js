@@ -47,16 +47,27 @@ app.get('/account/pw/:pw', (req, res) => {
   });
 });
 
-// 파라미터 포함 GET method
-app.get('/check_customer_or_salesperson/', (req, res) => {
+// url 파싱을 통한 다중 파라미터 전달
+app.get('/check_customer/', (req, res) => {
+  // var urlObject = url.parse(req.url)
+  // console.log(urlObject)
+  var queryData = url.parse(req.url, true).query;
+  console.log(queryData)
+  connection.query('select * from Customer c, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + queryData.pw + '\'and c.c_no=a.c_no', (error, rows) => {
+    if (error) throw error;
+    console.log('customer - id, pw check result is: ', rows);
+    res.send(rows);
+  });
+});
+
+app.get('/check_salesperson/', (req, res) => {
   // var urlObject = url.parse(req.url)
   // console.log(urlObject)
   var queryData = url.parse(req.url, true).query;
   console.log(queryData)
   connection.query('select * from Salesperson s, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + queryData.pw + '\'and s.s_no=a.s_no', (error, rows) => {
-  // connection.query('SELECT * from Account WHERE id=\'' + req.params.pw + '\'', (error, rows) => {
     if (error) throw error;
-    console.log('id, pw check result is: ', rows);
+    console.log('salesperson - id, pw check result is: ', rows);
     res.send(rows);
   });
 });
