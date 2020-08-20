@@ -269,8 +269,8 @@ app.get('/work/:m_no', (req, res) => {
 // 파라미터 한개 포함 GET method
 app.get('/repair_or_service/:his', (req, res) => {
   // console.log(req.params.his)
-  // connection.query('select service_no from `Repair-or-Service` where history=\'' + req.params.his + '\'', (error, rows) => {
-    connection.query('select * from `Repair-or-Service`', (error, rows) => {
+  connection.query('select service_no from `Repair-or-Service` where history=\'' + req.params.his + '\'', (error, rows) => {
+    // connection.query('select * from `Repair-or-Service`', (error, rows) => {
     if (error) throw error;
     console.log('service number result is: ', rows);
     res.send(rows);
