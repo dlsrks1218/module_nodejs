@@ -174,7 +174,7 @@ app.post('/update_car_data/', (req, res) => {
 });
 
 app.post('/update_customer_name_data/', (req, res) => {
-  connection.query('update Customer set name = ' + req.body.name + ' where c_no = ' + Number(req.body.c_no), (error, rows) => {
+  connection.query('update Customer set name = \'' + req.body.name + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer name data - result is: ', rows);
     res.send(rows);
@@ -182,15 +182,7 @@ app.post('/update_customer_name_data/', (req, res) => {
 });
 
 app.post('/update_customer_age_data/', (req, res) => {
-  connection.query('update Customer set age = ' + req.body.age + ' where c_no = ' + Number(req.body.c_no), (error, rows) => {
-    if (error) throw error;
-    console.log('updated customer age data - result is: ', rows);
-    res.send(rows);
-  });
-});
-
-app.post('/update_customer_age_data/', (req, res) => {
-  connection.query('update Customer set age = ' + req.body.age + ' where c_no = ' + Number(req.body.c_no), (error, rows) => {
+  connection.query('update Customer set age = \'' + req.body.age + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer age data - result is: ', rows);
     res.send(rows);
@@ -198,7 +190,7 @@ app.post('/update_customer_age_data/', (req, res) => {
 });
 
 app.post('/update_customer_address_data/', (req, res) => {
-  connection.query('update Customer set address = ' + req.body.address + ' where c_no = ' + Number(req.body.c_no), (error, rows) => {
+  connection.query('update Customer set address = \'' + req.body.address + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer address data - result is: ', rows);
     res.send(rows);
@@ -206,7 +198,7 @@ app.post('/update_customer_address_data/', (req, res) => {
 });
 
 app.post('/update_customer_phone_data/', (req, res) => {
-  connection.query('update Customer set phone = ' + req.body.phone + ' where c_no = ' + Number(req.body.c_no), (error, rows) => {
+  connection.query('update Customer set phone = \'' + req.body.phone + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer address data - result is: ', rows);
     res.send(rows);
@@ -214,7 +206,7 @@ app.post('/update_customer_phone_data/', (req, res) => {
 });
 
 app.post('/delete_customer_data/', (req, res) => {
-  connection.query('delete from Customer where c_no = ' + Number(req.body.c_no), (error, rows) => {
+  connection.query('delete from Customer where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('deleted customer data - result is: ', rows);
     res.send(rows);
@@ -222,7 +214,7 @@ app.post('/delete_customer_data/', (req, res) => {
 });
 
 app.post('/delete_car_data/', (req, res) => {
-  connection.query('delete from Car where car_no = ' + Number(req.body.car_no), (error, rows) => {
+  connection.query('delete from Car where car_no = \'' + Number(req.body.car_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('deleted car data - result is: ', rows);
     res.send(rows);
@@ -307,7 +299,7 @@ app.post('/insert_invoice_data/', (req, res) => {
 
 // update문을 수행할 POST 메소드
 app.post('/update_parts_minus/', (req, res) => {
-  connection.query('update Parts set p_cnt = p_cnt-1 where p_no = ' + Number(req.body.p_no), (error, rows) => {
+  connection.query('update Parts set p_cnt = p_cnt-1 where p_no = \'' + Number(req.body.p_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated parts count - result is: ', rows);
     res.send(rows);
