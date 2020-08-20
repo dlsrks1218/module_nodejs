@@ -172,6 +172,62 @@ app.post('/update_car_data/', (req, res) => {
   });
 });
 
+app.post('/update_customer_name_data/', (req, res) => {
+  connection.query('update Customer set name = ' + req.body.name + ' where c_no = ' + Number(req.body.c_no), (error, rows) => {
+    if (error) throw error;
+    console.log('updated customer name data - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+app.post('/update_customer_age_data/', (req, res) => {
+  connection.query('update Customer set age = ' + req.body.age + ' where c_no = ' + Number(req.body.c_no), (error, rows) => {
+    if (error) throw error;
+    console.log('updated customer age data - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+app.post('/update_customer_age_data/', (req, res) => {
+  connection.query('update Customer set age = ' + req.body.age + ' where c_no = ' + Number(req.body.c_no), (error, rows) => {
+    if (error) throw error;
+    console.log('updated customer age data - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+app.post('/update_customer_address_data/', (req, res) => {
+  connection.query('update Customer set address = ' + req.body.address + ' where c_no = ' + Number(req.body.c_no), (error, rows) => {
+    if (error) throw error;
+    console.log('updated customer address data - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+app.post('/update_customer_phone_data/', (req, res) => {
+  connection.query('update Customer set phone = ' + req.body.phone + ' where c_no = ' + Number(req.body.c_no), (error, rows) => {
+    if (error) throw error;
+    console.log('updated customer address data - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+app.post('/delete_customer_data/', (req, res) => {
+  connection.query('delete from Customer where c_no = ' + Number(req.body.c_no), (error, rows) => {
+    if (error) throw error;
+    console.log('deleted customer data - result is: ', rows);
+    res.send(rows);
+  });
+});
+
+app.post('/delete_car_data/', (req, res) => {
+  connection.query('delete from Car where car_no = ' + Number(req.body.car_no), (error, rows) => {
+    if (error) throw error;
+    console.log('deleted car data - result is: ', rows);
+    res.send(rows);
+  });
+});
+
 // 파라미터 한개 포함 GET method
 app.get('/car/s_no/:car_num', (req, res) => {
   // console.log(Number(req.params.car_num))
@@ -219,6 +275,15 @@ app.get('/repair_or_service/:history', (req, res) => {
 });
 
 
+app.get('/invoice', (req, res) => {
+  connection.query('SELECT * from Invoice', (error, rows) => {
+    if (error) throw error;
+    console.log('Invoice info is: ', rows);
+    res.send(rows);
+  });
+});
+
+
 // insert문을 수행할 POST 메소드
 app.post('/insert_invoice_data/', (req, res) => {
   connection.query('insert into Invoice(s_no, c_no) values(\'' + Number(req.body.s_no) + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
@@ -258,6 +323,13 @@ app.post('/insert_work_data/', (req, res) => {
   });
 });
 
+app.post('/insert_car_data/', (req, res) => {
+  connection.query('insert into Car(s_no, brand, year, model, color) values(\'' + Number(req.body.s_no) + '\',\'' + req.body.brand + '\',\'' + req.body.year + '\',\'' + req.body.model + '\',\'' + req.body.color + '\')', (error, rows) => {
+    if (error) throw error;
+    console.log('inserted car - result is: ', rows);
+    res.send(rows);
+  });
+});
 
 
 app.listen(app.get('port'), () => {
