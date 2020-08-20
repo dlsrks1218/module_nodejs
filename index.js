@@ -70,7 +70,7 @@ app.get('/customer/cno/:cno', (req, res) => {
 app.get('/salesperson/sno/:sno', (req, res) => {
   connection.query('select s_no from Salesperson where name=\'' + req.params.name + '\'', (error, rows) => {
     if (error) throw error;
-    console.log('customer - cno result is: ', rows);
+    console.log('Salesperson - sno result is: ', rows);
     res.send(rows);
   });
 });
