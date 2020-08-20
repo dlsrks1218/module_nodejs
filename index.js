@@ -283,6 +283,14 @@ app.get('/total_invoice_list', (req, res) => {
   });
 });
 
+app.get('/registered_service_list', (req, res) => {
+  connection.query('SELECT w.service_no, w.m_no, w.work_date, r.c_no FROM Work w, `Repair-or-Service` r where w.service_no=r.service_no', (error, rows) => {
+    if (error) throw error;
+    console.log('Registered service info is: ', rows);
+    res.send(rows);
+  });
+});
+
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_invoice_data/', (req, res) => {
