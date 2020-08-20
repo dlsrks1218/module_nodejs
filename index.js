@@ -275,7 +275,7 @@ app.get('/repair_or_service/:history', (req, res) => {
 });
 
 
-app.get('/invoice', (req, res) => {
+app.get('/total_invoice_list', (req, res) => {
   connection.query('SELECT * from Invoice', (error, rows) => {
     if (error) throw error;
     console.log('Invoice info is: ', rows);
