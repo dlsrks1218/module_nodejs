@@ -67,7 +67,7 @@ app.get('/customer/cno/:cno', (req, res) => {
 });
 
 // 파라미터 한개 포함 GET method
-app.get('/salesperson/sno/:sno', (req, res) => {
+app.get('/salesperson/sno/:name', (req, res) => {
   connection.query('select s_no from Salesperson where name=\'' + req.params.name + '\'', (error, rows) => {
     if (error) throw error;
     console.log('Salesperson - sno result is: ', rows);
