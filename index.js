@@ -327,7 +327,7 @@ app.post('/insert_history_data/', (req, res) => {
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_work_data/', (req, res) => {
-  connection.query('insert into Work(service_no, m_no, work_date) values(\'' + Number(req.body.service_no) + '\',\'' + Number(req.body.m_no) + '\',\'' + req.body.work_date + '\')', (error, rows) => {
+  connection.query('insert into Work(service_no, m_no, work_date) values(\'' + Number(req.body.serv_no) + '\',\'' + Number(req.body.m_no) + '\',\'' + req.body.work_date + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted work - result is: ', rows);
     res.send(rows);
