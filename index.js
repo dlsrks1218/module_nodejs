@@ -58,8 +58,8 @@ app.get('/account/pw/:pw', (req, res) => {
 });
 
 // 파라미터 한개 포함 GET method
-app.get('/customer/cno/:cno', (req, res) => {
-  connection.query('select c_no from Customer where name=\'' + req.params.cno + '\'', (error, rows) => {
+app.get('/customer/cno/:name', (req, res) => {
+  connection.query('select c_no from Customer where name=\'' + req.params.name + '\'', (error, rows) => {
     if (error) throw error;
     console.log('customer - cno result is: ', rows);
     res.send(rows);
