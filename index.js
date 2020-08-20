@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
     res.send('Hello, Wecome to 1조! : ' + ip + "," + new Date());
 });
 
+
 app.get('/health', (req, res) => {
     res.status(200).send();
 });
@@ -267,6 +268,7 @@ app.get('/work/:m_no', (req, res) => {
 
 // 파라미터 한개 포함 GET method
 app.get('/repair_or_service/:history', (req, res) => {
+  console.log(req.params.history)
   connection.query('select service_no from `Repair-or-Service` where history=\'' + req.params.history + '\'', (error, rows) => {
     if (error) throw error;
     console.log('service number result is: ', rows);
