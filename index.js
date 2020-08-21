@@ -1,8 +1,12 @@
 const express    = require('express');
 const mysql      = require('mysql');
-const dbconfig   = require('./config/database.js');
 const url        = require('url');
+
+const dbconfig   = require('./config/database.js');
 const connection = mysql.createConnection(dbconfig);
+
+const dbconfig_slave   = require('./config/database_slave.js');
+const connection_slave = mysql.createConnection(dbconfig_slave);
 
 const app = express();
 
@@ -29,7 +33,7 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/account', (req, res) => {
-  connection.query('SELECT * from Account', (error, rows) => {
+  connection_slave.query('SELECT * from Account', (error, rows) => {
     if (error) throw error;
     console.log('User info is: ', rows);
     res.send(rows);
@@ -41,7 +45,7 @@ app.get('/account', (req, res) => {
 
 // 파라미터 포함 GET method
 app.get('/account/id/:id', (req, res) => {
-  connection.query('SELECT * from Account WHERE id=\'' + req.params.id + '\'', (error, rows) => {
+  connection_slave.query('SELECT * from Account WHERE id=\'' + req.params.id + '\'', (error, rows) => {
     if (error) throw error;
     console.log('User detail info is: ', rows);
     res.send(rows);
@@ -50,7 +54,7 @@ app.get('/account/id/:id', (req, res) => {
 
 // 파라미터 한개 포함 GET method
 app.get('/account/pw/:pw', (req, res) => {
-  connection.query('SELECT * from Account WHERE pw=\'' + req.params.pw + '\'', (error, rows) => {
+  connection_slave.query('SELECT * from Account WHERE pw=\'' + req.params.pw + '\'', (error, rows) => {
     if (error) throw error;
     console.log('User detail info is: ', rows);
     res.send(rows);
@@ -59,7 +63,7 @@ app.get('/account/pw/:pw', (req, res) => {
 
 // 파라미터 한개 포함 GET method
 app.get('/customer/cno/:name', (req, res) => {
-  connection.query('select c_no from Customer where name=\'' + req.params.name + '\'', (error, rows) => {
+  connection_slave.query('select c_no from Customer where name=\'' + req.params.name + '\'', (error, rows) => {
     if (error) throw error;
     console.log('customer - cno result is: ', rows);
     res.send(rows);
@@ -68,7 +72,7 @@ app.get('/customer/cno/:name', (req, res) => {
 
 // 파라미터 한개 포함 GET method
 app.get('/salesperson/sno/:name', (req, res) => {
-  connection.query('select s_no from Salesperson where name=\'' + req.params.name + '\'', (error, rows) => {
+  connection_slave.query('select s_no from Salesperson where name=\'' + req.params.name + '\'', (error, rows) => {
     if (error) throw error;
     console.log('Salesperson - sno result is: ', rows);
     res.send(rows);
@@ -81,7 +85,7 @@ app.get('/check_customer/', (req, res) => {
   // console.log(urlObject)
   var queryData = url.parse(req.url, true).query;
   console.log(queryData)
-  connection.query('select * from Customer c, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + queryData.pw + '\'and c.c_no=a.c_no', (error, rows) => {
+  connection_slave.query('select * from Customer c, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + queryData.pw + '\'and c.c_no=a.c_no', (error, rows) => {
     if (error) throw error;
     console.log('customer - id, pw check result is: ', rows);
     res.send(rows);
@@ -93,7 +97,7 @@ app.get('/check_salesperson/', (req, res) => {
   // console.log(urlObject)
   var queryData = url.parse(req.url, true).query;
   console.log(queryData)
-  connection.query('select * from Salesperson s, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + queryData.pw + '\'and s.s_no=a.s_no', (error, rows) => {
+  connection_slave.query('select * from Salesperson s, Account a where a.id=\'' + queryData.id + '\'and a.pw=\'' + queryData.pw + '\'and s.s_no=a.s_no', (error, rows) => {
     if (error) throw error;
     console.log('salesperson - id, pw check result is: ', rows);
     res.send(rows);
@@ -141,7 +145,7 @@ app.post('/insert_salesperson_account/', (req, res) => {
 ///////////////////////////////////////////////////////
 // customer_module
 app.get('/available_car_list', (req, res) => {
-  connection.query('SELECT car_no, brand, year, model, color FROM Car WHERE c_no IS NULL', (error, rows) => {
+  connection_slave.query('SELECT car_no, brand, year, model, color FROM Car WHERE c_no IS NULL', (error, rows) => {
     if (error) throw error;
     console.log('available car info is: ', rows);
     res.send(rows);
@@ -149,7 +153,7 @@ app.get('/available_car_list', (req, res) => {
 });
 
 app.get('/total_car_list', (req, res) => {
-  connection.query('SELECT car_no, brand, year, model, color FROM Car', (error, rows) => {
+  connection_slave.query('SELECT car_no, brand, year, model, color FROM Car', (error, rows) => {
     if (error) throw error;
     console.log('total car info is: ', rows);
     res.send(rows);
@@ -157,7 +161,7 @@ app.get('/total_car_list', (req, res) => {
 });
 
 app.get('/total_customer_list', (req, res) => {
-  connection.query('select c_no, name, age, address, phone from Customer', (error, rows) => {
+  connection_slave.query('select c_no, name, age, address, phone from Customer', (error, rows) => {
     if (error) throw error;
     console.log('total customer info is: ', rows);
     res.send(rows);
@@ -224,7 +228,7 @@ app.post('/delete_car_data/', (req, res) => {
 // 파라미터 한개 포함 GET method
 app.get('/car/s_no/:car_num', (req, res) => {
   // console.log(Number(req.params.car_num))
-  connection.query('select s_no from Car where car_no=\'' + Number(req.params.car_num) + '\'', (error, rows) => {
+  connection_slave.query('select s_no from Car where car_no=\'' + Number(req.params.car_num) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('car - sno result is: ', rows);
     res.send(rows);
@@ -234,7 +238,7 @@ app.get('/car/s_no/:car_num', (req, res) => {
 // 파라미터 한개 포함 GET method
 app.get('/parts/parts_select/:p_no', (req, res) => {
   // console.log(Number(req.params.car_num))
-  connection.query('select * from Parts where p_no=\'' + Number(req.params.p_no) + '\'', (error, rows) => {
+  connection_slave.query('select * from Parts where p_no=\'' + Number(req.params.p_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('parts result is: ', rows);
     res.send(rows);
@@ -242,7 +246,7 @@ app.get('/parts/parts_select/:p_no', (req, res) => {
 });
 
 app.get('/work/m_no/', (req, res) => {
-  connection.query('SELECT distinct m_no from Work', (error, rows) => {
+  connection_slave.query('SELECT distinct m_no from Work', (error, rows) => {
     if (error) throw error;
     console.log('mechanic who have work result is: ', rows);
     res.send(rows);
@@ -251,7 +255,7 @@ app.get('/work/m_no/', (req, res) => {
 
 // 파라미터 한개 포함 GET method
 app.get('/work/:m_no', (req, res) => {
-  connection.query('select * from Work where m_no=\'' + Number(req.params.m_no) + '\'', (error, rows) => {
+  connection_slave.query('select * from Work where m_no=\'' + Number(req.params.m_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('all work of each mechanic result is: ', rows);
     res.send(rows);
@@ -261,17 +265,15 @@ app.get('/work/:m_no', (req, res) => {
 // 파라미터 한개 포함 GET method
 app.get('/repair_or_service/:his', (req, res) => {
   // console.log(req.params.his)
-  connection.query('select service_no from `Repair-or-Service` where history=\'' + req.params.his + '\'', (error, rows) => {
-    // connection.query('select * from `Repair-or-Service`', (error, rows) => {
+  connection_slave.query('select service_no from `Repair-or-Service` where history=\'' + req.params.his + '\'', (error, rows) => {
     if (error) throw error;
     console.log('service number result is: ', rows);
     res.send(rows);
   });
 });
 
-
 app.get('/total_invoice_list', (req, res) => {
-  connection.query('SELECT * from Invoice', (error, rows) => {
+  connection_slave.query('SELECT * from Invoice', (error, rows) => {
     if (error) throw error;
     console.log('Invoice info is: ', rows);
     res.send(rows);
@@ -279,7 +281,7 @@ app.get('/total_invoice_list', (req, res) => {
 });
 
 app.get('/registered_service_list', (req, res) => {
-  connection.query('SELECT w.service_no, w.m_no, w.work_date, r.c_no FROM Work w, `Repair-or-Service` r where w.service_no=r.service_no', (error, rows) => {
+  connection_slave.query('SELECT w.service_no, w.m_no, w.work_date, r.c_no FROM Work w, `Repair-or-Service` r where w.service_no=r.service_no', (error, rows) => {
     if (error) throw error;
     console.log('Registered service info is: ', rows);
     res.send(rows);
