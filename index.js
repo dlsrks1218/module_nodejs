@@ -2,8 +2,8 @@ const express    = require('express');
 const mysql      = require('mysql');
 const url        = require('url');
 
-const dbconfig   = require('./config/database.js');
-const connection = mysql.createConnection(dbconfig);
+const dbconfig_master   = require('./config/database_master.js');
+const connection_master = mysql.createConnection(dbconfig_master);
 
 const dbconfig_slave   = require('./config/database_slave.js');
 const connection_slave = mysql.createConnection(dbconfig_slave);
@@ -20,9 +20,9 @@ app.set('port', process.env.PORT || 8000);
 
 app.get('/', (req, res) => {
     var ip = req.headers['x-forwarded-for'] || 
-                req.connection.remoteAddress || 
+                req.connection_master.remoteAddress || 
                 req.socket.remoteAddress ||
-            (req.connection.socket ? req.connection.socket.remoteAddress : null);
+            (req.connection_master.socket ? req.connection_master.socket.remoteAddress : null);
     console.log(ip);
     res.send('Hello, Wecome to 1조! : ' + ip + "," + new Date());
 });
@@ -107,37 +107,37 @@ app.get('/check_salesperson/', (req, res) => {
 // insert문을 수행할 POST 메소드
 app.post('/insert_customer_data/', (req, res) => {
   // console.log(req.body.name)
-  connection.query('insert into Customer(ticket_cnt, name, age, address, phone, id_no) values(\'' + Number(req.body.ticket_cnt) + '\',\'' + req.body.name + '\',\'' + Number(req.body.age) + '\',\'' + req.body.address + '\',\'' + req.body.phone + '\',\'' + req.body.id_no + '\')', (error, rows) => {
+  connection_master.query('insert into Customer(ticket_cnt, name, age, address, phone, id_no) values(\'' + Number(req.body.ticket_cnt) + '\',\'' + req.body.name + '\',\'' + Number(req.body.age) + '\',\'' + req.body.address + '\',\'' + req.body.phone + '\',\'' + req.body.id_no + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted customer - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_customer_account/', (req, res) => {
-  connection.query('insert into Account(id, pw, c_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
+  connection_master.query('insert into Account(id, pw, c_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted account - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_salesperson_data/', (req, res) => {
-  connection.query('insert into Salesperson(name) values(\'' + req.body.name + '\')', (error, rows) => {
+  connection_master.query('insert into Salesperson(name) values(\'' + req.body.name + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted salesperson - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_salesperson_account/', (req, res) => {
-  connection.query('insert into Account(id, pw, s_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.s_no) + '\')', (error, rows) => {
+  connection_master.query('insert into Account(id, pw, s_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.s_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted account - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
@@ -170,58 +170,58 @@ app.get('/total_customer_list', (req, res) => {
 
 // update문을 수행할 POST 메소드
 app.post('/update_car_data/', (req, res) => {
-  connection.query('update Car set c_no = ' + Number(req.body.c_no) + ' where car_no = ' + Number(req.body.car_num), (error, rows) => {
+  connection_master.query('update Car set c_no = ' + Number(req.body.c_no) + ' where car_no = ' + Number(req.body.car_num), (error, rows) => {
     if (error) throw error;
     console.log('updated car data - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 app.post('/update_customer_name_data/', (req, res) => {
-  connection.query('update Customer set name = \'' + req.body.name + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
+  connection_master.query('update Customer set name = \'' + req.body.name + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer name data - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 app.post('/update_customer_age_data/', (req, res) => {
-  connection.query('update Customer set age = \'' + req.body.age + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
+  connection_master.query('update Customer set age = \'' + req.body.age + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer age data - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 app.post('/update_customer_address_data/', (req, res) => {
-  connection.query('update Customer set address = \'' + req.body.address + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
+  connection_master.query('update Customer set address = \'' + req.body.address + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer address data - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 app.post('/update_customer_phone_data/', (req, res) => {
-  connection.query('update Customer set phone = \'' + req.body.phone + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
+  connection_master.query('update Customer set phone = \'' + req.body.phone + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer address data - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 app.post('/delete_customer_data/', (req, res) => {
-  connection.query('delete from Customer where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
+  connection_master.query('delete from Customer where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('deleted customer data - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 app.post('/delete_car_data/', (req, res) => {
-  connection.query('delete from Car where car_no = \'' + Number(req.body.car_no) + '\'', (error, rows) => {
+  connection_master.query('delete from Car where car_no = \'' + Number(req.body.car_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('deleted car data - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
@@ -291,20 +291,20 @@ app.get('/registered_service_list', (req, res) => {
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_invoice_data/', (req, res) => {
-  connection.query('insert into Invoice(s_no, c_no) values(\'' + Number(req.body.s_no) + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
+  connection_master.query('insert into Invoice(s_no, c_no) values(\'' + Number(req.body.s_no) + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted invoice - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 
 // update문을 수행할 POST 메소드
 app.post('/update_parts_minus/', (req, res) => {
-  connection.query('update Parts set p_cnt = p_cnt-1 where p_no = \'' + Number(req.body.p_no) + '\'', (error, rows) => {
+  connection_master.query('update Parts set p_cnt = p_cnt-1 where p_no = \'' + Number(req.body.p_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated parts count - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
@@ -312,27 +312,27 @@ app.post('/update_parts_minus/', (req, res) => {
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_history_data/', (req, res) => {
-  connection.query('insert into `Repair-or-Service`(history, c_no, p_no) values(\'' + req.body.history + '\',\'' + Number(req.body.c_no) + '\',\'' + Number(req.body.p_no) + '\')', (error, rows) => {
+  connection_master.query('insert into `Repair-or-Service`(history, c_no, p_no) values(\'' + req.body.history + '\',\'' + Number(req.body.c_no) + '\',\'' + Number(req.body.p_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted history - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 // insert문을 수행할 POST 메소드
 app.post('/insert_work_data/', (req, res) => {
-  connection.query('insert into Work(service_no, m_no, work_date) values(\'' + Number(req.body.service_no) + '\',\'' + Number(req.body.m_no) + '\',\'' + req.body.work_date + '\')', (error, rows) => {
+  connection_master.query('insert into Work(service_no, m_no, work_date) values(\'' + Number(req.body.service_no) + '\',\'' + Number(req.body.m_no) + '\',\'' + req.body.work_date + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted work - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
 app.post('/insert_car_data/', (req, res) => {
-  connection.query('insert into Car(s_no, brand, year, model, color) values(\'' + Number(req.body.s_no) + '\',\'' + req.body.brand + '\',\'' + req.body.year + '\',\'' + req.body.model + '\',\'' + req.body.color + '\')', (error, rows) => {
+  connection_master.query('insert into Car(s_no, brand, year, model, color) values(\'' + Number(req.body.s_no) + '\',\'' + req.body.brand + '\',\'' + req.body.year + '\',\'' + req.body.model + '\',\'' + req.body.color + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted car - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
   });
 });
 
