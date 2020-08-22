@@ -52,6 +52,14 @@ app.get('/account/id/:id', (req, res) => {
   });
 });
 
+app.get('/account/id/', (req, res) => {
+  connection_slave.query('SELECT * from Account WHERE id=\'' + req.params.id + '\'', (error, rows) => {
+    if (error) throw error;
+    console.log('User detail info is: ', rows);
+    res.send(rows);
+  });
+});
+
 app.post('/account/id/', (req, res) => {
   connection_slave.query('SELECT * from Account WHERE id=\'' + req.body.id + '\'', (error, rows) => {
     if (error) throw error;
@@ -62,6 +70,14 @@ app.post('/account/id/', (req, res) => {
 
 // 파라미터 한개 포함 GET method
 app.get('/account/pw/:pw', (req, res) => {
+  connection_slave.query('SELECT * from Account WHERE pw=\'' + req.params.pw + '\'', (error, rows) => {
+    if (error) throw error;
+    console.log('User detail info is: ', rows);
+    res.send(rows);
+  });
+});
+
+app.get('/account/pw/', (req, res) => {
   connection_slave.query('SELECT * from Account WHERE pw=\'' + req.params.pw + '\'', (error, rows) => {
     if (error) throw error;
     console.log('User detail info is: ', rows);
