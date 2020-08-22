@@ -2,4 +2,4 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ec2-user/mod_project
+    destination: /home/ec2-user/build_ver2
