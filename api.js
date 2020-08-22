@@ -1,7 +1,6 @@
 const express    = require('express');
 const mysql      = require('mysql');
 const url        = require('url');
-// const fs         = require('fs');
 
 const dbconfig_master   = require('./config/database_master.js');
 const connection_master = mysql.createConnection(dbconfig_master);
