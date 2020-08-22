@@ -204,7 +204,7 @@ app.put('/update_car_data/', (req, res) => {
   connection_master.query('update Car set c_no = ' + Number(req.body.c_no) + ' where car_no = ' + Number(req.body.car_num), (error, rows) => {
     if (error) throw error;
     console.log('updated car data - result is: ', rows);
-    // res.send(rows);
+    res.send(rows);
   });
 });
 
@@ -212,7 +212,7 @@ app.put('/update_customer_name_data/', (req, res) => {
   connection_master.query('update Customer set name = \'' + req.body.name + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer name data - result is: ', rows);
-    // res.send(rows);
+    res.send(rows);
   });
 });
 
@@ -220,7 +220,7 @@ app.put('/update_customer_age_data/', (req, res) => {
   connection_master.query('update Customer set age = \'' + req.body.age + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer age data - result is: ', rows);
-    // res.send(rows);
+    res.send(rows);
   });
 });
 
@@ -228,7 +228,7 @@ app.put('/update_customer_address_data/', (req, res) => {
   connection_master.query('update Customer set address = \'' + req.body.address + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer address data - result is: ', rows);
-    // res.send(rows);
+    res.send(rows);
   });
 });
 
@@ -236,7 +236,7 @@ app.put('/update_customer_phone_data/', (req, res) => {
   connection_master.query('update Customer set phone = \'' + req.body.phone + '\' where c_no = \'' + Number(req.body.c_no) + '\'', (error, rows) => {
     if (error) throw error;
     console.log('updated customer address data - result is: ', rows);
-    // res.send(rows);
+    res.send(rows);
   });
 });
 
