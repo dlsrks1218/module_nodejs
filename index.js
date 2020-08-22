@@ -125,11 +125,20 @@ app.post('/check_salesperson/', (req, res) => {
   });
 });
 
+app.put('/insert_customer_data/', (req, res) => {
+  connection_master.query('insert into Customer(ticket_cnt, name, age, address, phone, id_no) values(\'' + Number(req.body.ticket_cnt) + '\',\'' + req.body.name + '\',\'' + Number(req.body.age) + '\',\'' + req.body.address + '\',\'' + req.body.phone + '\',\'' + req.body.id_no + '\')', (error, rows) => {
+    if (error) throw error;
+    console.log('inserted customer - result is: ', rows);
+    res.send(rows);
+    return;
+  });
+});
+
 app.put('/insert_customer_account/', (req, res) => {
   connection_master.query('insert into Account(id, pw, c_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted account - result is: ', rows);
-    // res.send(rows);
+    res.send(rows);
     return;
   });
 });
@@ -138,7 +147,7 @@ app.put('/insert_salesperson_data/', (req, res) => {
   connection_master.query('insert into Salesperson(name) values(\'' + req.body.name + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted salesperson - result is: ', rows);
-    // res.send(rows);
+    res.send(rows);
     return;
   });
 });
@@ -147,13 +156,11 @@ app.put('/insert_salesperson_account/', (req, res) => {
   connection_master.query('insert into Account(id, pw, s_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.s_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted account - result is: ', rows);
-    // res.send(rows);
+    res.send(rows);
     return;
   });
 });
 
-
-///////////////////////////////////////////////////////
 // customer_module
 app.get('/available_car_list', (req, res) => {
   connection_slave.query('SELECT car_no, brand, year, model, color FROM Car WHERE c_no IS NULL', (error, rows) => {
