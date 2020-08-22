@@ -182,7 +182,6 @@ app.put('/update_car_data/', (req, res) => {
   connection_master.query('update Car set c_no = ' + Number(req.body.c_no) + ' where car_no = ' + Number(req.body.car_num), (error, rows) => {
     if (error) throw error;
     console.log('updated car data - result is: ', rows);
-    res.
   });
 });
 
