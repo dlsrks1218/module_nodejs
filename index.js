@@ -129,7 +129,8 @@ app.put('/insert_customer_account/', (req, res) => {
   connection_master.query('insert into Account(id, pw, c_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.c_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted account - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
+    return;
   });
 });
 
@@ -137,7 +138,8 @@ app.put('/insert_salesperson_data/', (req, res) => {
   connection_master.query('insert into Salesperson(name) values(\'' + req.body.name + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted salesperson - result is: ', rows);
-    res.send(rows);
+    // res.send(rows);
+    return;
   });
 });
 
@@ -145,6 +147,8 @@ app.put('/insert_salesperson_account/', (req, res) => {
   connection_master.query('insert into Account(id, pw, s_no) values(\'' + req.body.id + '\',\'' + req.body.pw + '\',\'' + Number(req.body.s_no) + '\')', (error, rows) => {
     if (error) throw error;
     console.log('inserted account - result is: ', rows);
+    // res.send(rows);
+    return;
   });
 });
 
