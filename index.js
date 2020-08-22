@@ -1,6 +1,7 @@
 const express    = require('express');
 const mysql      = require('mysql');
 const url        = require('url');
+// const fs         = require('fs');
 
 const dbconfig_master   = require('./config/database_master.js');
 const connection_master = mysql.createConnection(dbconfig_master);
@@ -191,6 +192,7 @@ app.put('/update_car_data/', (req, res) => {
     if (error) throw error;
     console.log('updated car data - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -199,6 +201,7 @@ app.put('/update_customer_name_data/', (req, res) => {
     if (error) throw error;
     console.log('updated customer name data - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -207,6 +210,7 @@ app.put('/update_customer_age_data/', (req, res) => {
     if (error) throw error;
     console.log('updated customer age data - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -215,6 +219,7 @@ app.put('/update_customer_address_data/', (req, res) => {
     if (error) throw error;
     console.log('updated customer address data - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -223,6 +228,7 @@ app.put('/update_customer_phone_data/', (req, res) => {
     if (error) throw error;
     console.log('updated customer address data - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -231,6 +237,7 @@ app.delete('/delete_customer_data/', (req, res) => {
     if (error) throw error;
     console.log('deleted customer data - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -239,6 +246,7 @@ app.delete('/delete_car_data/', (req, res) => {
     if (error) throw error;
     console.log('deleted car data - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -306,6 +314,7 @@ app.put('/insert_invoice_data/', (req, res) => {
     if (error) throw error;
     console.log('inserted invoice - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -314,6 +323,7 @@ app.put('/update_parts_minus/', (req, res) => {
     if (error) throw error;
     console.log('updated parts count - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -322,6 +332,7 @@ app.put('/insert_history_data/', (req, res) => {
     if (error) throw error;
     console.log('inserted history - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -330,6 +341,7 @@ app.put('/insert_work_data/', (req, res) => {
     if (error) throw error;
     console.log('inserted work - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
@@ -338,6 +350,7 @@ app.put('/insert_car_data/', (req, res) => {
     if (error) throw error;
     console.log('inserted car - result is: ', rows);
     res.send(rows);
+    return;
   });
 });
 
